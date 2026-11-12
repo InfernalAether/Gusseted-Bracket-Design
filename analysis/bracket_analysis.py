@@ -5,6 +5,8 @@ Project 3: Mechanical Engineering Portfolio
 Initial analytical model using a 500 N downward load.
 """
 
+import numpy as np
+
 # MATERIAL PROPERTIES
 
 material = "6061-T6 Aluminum"
@@ -94,9 +96,23 @@ cross_section_area = base_width * base_thickness
 average_shear_stress = applied_load / cross_section_area
 max_shear_stress = (3 / 2) * average_shear_stress
 
-# VON MISES STRESS
+# VON MISES STRESS DISTRIBUTION
 
-von_mises_stress = max_bending_stress
+section_positions = np.linspace(-base_thickness / 2, base_thickness / 2, 1001)
+
+bending_stress_distribution = (
+    max_bending_moment * section_positions / second_moment_area
+)
+
+shear_stress_distribution = (
+    1.5 * average_shear_stress * (1 - (2 * section_positions / base_thickness) ** 2)
+)
+
+von_mises_distribution = np.sqrt(
+    bending_stress_distribution**2 + 3 * shear_stress_distribution**2
+)
+
+von_mises_stress = np.max(von_mises_distribution)
 
 # FACTOR OF SAFETY
 
