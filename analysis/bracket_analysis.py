@@ -114,6 +114,7 @@ von_mises_distribution = np.sqrt(
 
 von_mises_stress = np.max(von_mises_distribution)
 
+
 # FACTOR OF SAFETY
 
 
